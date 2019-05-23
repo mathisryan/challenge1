@@ -1,7 +1,7 @@
 public/app.js
 node_modules
 dist
-../challenge_2/
-../challenge_3/
-../challenge_4/
+challenge_2/
+challenge_3/
+challenge_4/
 ../.gitignore
