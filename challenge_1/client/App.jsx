@@ -8,9 +8,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm = '',
-      searchResults = '',
-      pageCount = ''
+      searchTerm: '',
+      searchResults: '',
+      pageCount: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,7 +29,7 @@ class App extends React.Component {
       console.log('RESULTS', results);
       this.setState({
         searchResults: results,
-        pageCount = results.length / 5
+        pageCount: results.length / 5
       });
     })
     event.preventDefault();
