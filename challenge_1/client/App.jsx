@@ -8,8 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: '',
-      searchResults: [{category2: '', description: '', date: ''}],
+      value: '',
+      searchResults: [],
       pageCount: ''
     };
 
@@ -18,18 +18,20 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({searchTerm: event.target.searchTerm})
+    this.setState({value: event.target.value})
   }
 
   handleSubmit(event) {
     alert('Searching for ' + this.state.value);
-    var query = '/posts?q=' + this.state.value;
-    fetch(`localhost:3000?Get${query}`)
-    .then(results => {
-      console.log('RESULTS', results);
+    var query = '/events?q=' + this.state.value;
+    fetch(`http://localhost:3000${query}`)
+    .then(response =>
+      response.json()
+    )
+    .then(data => {
       this.setState({
-        searchResults: results,
-        pageCount: results.length / 5
+        searchResults: data,
+        pageCount: data.length / 5
       });
     })
     event.preventDefault();
@@ -40,7 +42,7 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Input a historical event:
-            <input type='text' searchTerm={this.state.searchTerm} onChange={this.handleChange} />
+            <input type='text' value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type='submit' value='Submit' />
         </form>

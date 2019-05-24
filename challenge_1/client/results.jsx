@@ -3,22 +3,25 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 function Results(props) {
-  var details = props.results.map(function(category2, description, date) {
-    return <tr>
-      <td>{category2}</td>
-      <td>{description}</td>
-      <td>{date}</td>
+  console.log('PROPS', props);
+  var details = props.results.map((item, index) => {
+    return <tr key={index}>
+      <td>{item.category2}</td>
+      <td>{item.description}</td>
+      <td>{item.date}</td>
     </tr>
   })
   return (
     props.results.length > 0 &&
       <table>
         <caption>Search Results</caption>
-          <tr>
-            <th>Location</th>
-            <th>Event</th>
-            <th>Date</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Event</th>
+              <th>Date</th>
+            </tr>
+          </thead>
           <tbody>
             {details}
           </tbody>
