@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchTerm: '',
-      searchResults: [],
+      searchResults: [{category2: '', description: '', date: ''}],
       pageCount: ''
     };
 
