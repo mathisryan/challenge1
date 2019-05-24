@@ -19,6 +19,17 @@ class App extends React.Component {
     alert('Searching for ' + this.state.value);
     event.preventDefault();
   }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Input a historical event:
+          <input type="text" value={this.state.searchTerm} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    )
+  }
 }
 export default hot(App);
 
