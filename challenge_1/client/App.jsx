@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchTerm: '',
-      searchResults: '',
+      searchResults: [],
       pageCount: ''
     };
 
@@ -24,7 +24,7 @@ class App extends React.Component {
   handleSubmit(event) {
     alert('Searching for ' + this.state.value);
     var query = '/posts?q=' + this.state.value;
-    fetch(`localhost/Get ${query}`)
+    fetch(`localhost:3000?Get${query}`)
     .then(results => {
       console.log('RESULTS', results);
       this.setState({
@@ -45,11 +45,13 @@ class App extends React.Component {
           <input type='submit' value='Submit' />
         </form>
         <Results results={this.state.searchResults} />
-        <ReactPaginate
-          pageCount={this.props.pageCount}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={2}
-        />
+        {this.state.searchResults.length > 0 &&
+          <ReactPaginate
+            pageCount={this.props.pageCount}
+            pageRangeDisplayed={5}
+            marginPagesDisplayed={2}
+          />
+        }
       </div>
     )
   }

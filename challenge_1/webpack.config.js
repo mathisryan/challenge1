@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public'),
-    publicPath: "/assets/"
+    publicPath: "/"
   },
   devServer: {
     publicPath: 'http://localhost:8080/assets/',
@@ -30,6 +30,11 @@ module.exports = {
   resolve: { extensions: ["*", ".js", ".jsx"] },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebPackPlugin()
+    new HtmlWebPackPlugin(
+      {
+        title: 'Historical Events Finder',
+        template: './client/index.html'
+      }
+    )
   ]
 };
