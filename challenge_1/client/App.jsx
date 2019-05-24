@@ -40,7 +40,7 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Input a historical event:
-            <input type='text' value={this.state.searchTerm} onChange={this.handleChange} />
+            <input type='text' searchTerm={this.state.searchTerm} onChange={this.handleChange} />
           </label>
           <input type='submit' value='Submit' />
         </form>
