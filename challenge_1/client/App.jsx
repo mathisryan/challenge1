@@ -24,27 +24,39 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Searching for ' + this.state.value);
-    var query = '/events?q=' + this.state.value;
+    console.log('Searching for ' + this.state.value);
+    var query = '/events?q=' + this.state.value + '&_start=1&_limit=10';
     fetch(`http://localhost:3000${query}`)
-    .then(response =>
-      response.json()
-    )
-    .then(data => {
-      var fifth = data.length / 5;
+    .then(function(response){
+      var total = response.headers.get('X-Total-Count');
+      var fifth = Number.parseInt(total) / 5;
       var split = Number.parseInt(fifth);
       this.setState({
-        searchResults: data,
         pageCount: split
       });
-    })
+      return response.json()
+    }.bind(this))
+    .then(function(data){
+      this.setState({
+        searchResults: data,
+      });
+    }.bind(this))
     event.preventDefault();
   }
 
   handlePageClick(data) {
     let selected = data.selected;
     let offset = Math.ceil(selected * 10);
-    this.setState({ offset: offset });
+    var query = '/events?q=' + this.state.value + `&_start=${offset}&_limit=10`;
+    fetch(`http://localhost:3000${query}`)
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      this.setState({
+        searchResults: data,
+      });
+    })
   };
 
   render() {
@@ -52,7 +64,7 @@ class App extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Input a historical event:
+            Input a search term:
             <input type='text' value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type='submit' value='Submit' />
