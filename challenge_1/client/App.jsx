@@ -10,11 +10,13 @@ class App extends React.Component {
     this.state = {
       value: '',
       searchResults: [],
-      pageCount: ''
+      pageCount: '',
+      offset: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   handleChange(event) {
@@ -29,13 +31,22 @@ class App extends React.Component {
       response.json()
     )
     .then(data => {
+      var fifth = data.length / 5;
+      var split = Number.parseInt(fifth);
       this.setState({
         searchResults: data,
-        pageCount: data.length / 5
+        pageCount: split
       });
     })
     event.preventDefault();
   }
+
+  handlePageClick(data) {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * 10);
+    this.setState({ offset: offset });
+  };
+
   render() {
     return (
       <div>
@@ -46,13 +57,16 @@ class App extends React.Component {
           </label>
           <input type='submit' value='Submit' />
         </form>
-        <Results results={this.state.searchResults} />
         {this.state.searchResults.length > 0 &&
+        <div>
+          <Results results={this.state.searchResults} subset={this.state.offset} />
           <ReactPaginate
-            pageCount={this.props.pageCount}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={2}
+            pageCount={this.state.pageCount}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            onPageChange={this.handlePageClick}
           />
+        </div>
         }
       </div>
     )

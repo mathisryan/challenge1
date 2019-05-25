@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 function Results(props) {
-  console.log('PROPS', props);
-  var details = props.results.map((item, index) => {
+  var selected = props.results.slice(props.subset, (props.subset + 10));
+  var details = selected.map((item, index) => {
     return <tr key={index}>
       <td>{item.category2}</td>
       <td>{item.description}</td>
